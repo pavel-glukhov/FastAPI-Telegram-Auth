@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Authorization Page</title>
+</head>
+<body>
+<form>
+    <div>
+        <!-- {{ telegram_login_widget|safe }} -->
+        {% autoescape off %}
+        {{ telegram_login_widget }}
+        {% endautoescape %}
+    </div>
+</form>
+</body>
+</html>
