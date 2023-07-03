@@ -35,14 +35,15 @@ async def login(request: Request,
     config = load_config()
     telegram_token = config.bot.telegram_token
     telegram_login = config.bot.telegram_login
-    auth_url = str(request.url_for('login'))
+    redirect_url = str(request.url_for('login'))
 
     widget = TelegramLoginWidget(telegram_login=telegram_login,
                                  size=Size.LARGE,
-                                 redirect_url=auth_url,
+                                 redirect_url=redirect_url,
                                  user_photo=False,
                                  corner_radius=0)
     telegram_login_widget = widget.redirect_telegram_login_widget()
+
     context = {
         'request': request,
         'telegram_login_widget': telegram_login_widget
@@ -55,12 +56,11 @@ async def login(request: Request,
         result = verify_telegram_authentication(telegram_token, params.dict())
 
     except TelegramDataIsOutdated:
-        return HTMLResponse('The authentication data is expired..')
+        return HTMLResponse('The authentication data is expired.')
     except TelegramDataError:
-        return HTMLResponse('The request contains invalid data')
+        return HTMLResponse('The request contains invalid data.')
 
     if result:
         return templates.TemplateResponse('profile.html',
                                           context={'request': request,
-                                                   **result}
-                                          )
+                                                   **result})

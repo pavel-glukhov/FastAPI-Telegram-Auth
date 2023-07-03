@@ -12,10 +12,30 @@ class TelegramLoginWidget:
     """
     Class to generate Telegram login Widget according to the information
      from the official documentation: https://core.telegram.org/widgets/login
+     
+     Callback Telegram Login Widget is required:
+     - telegram_login: str
+     
+     Additional params:
+     - size: enum [Size.LARGE | Size.MEDIUM | Size.SMALL]
+     - user_photo: bool
+     - corner_radius: integer
+     - access_write: bool
+     
+    Redirect Telegram Login Widget is required:
+     - telegram_login: str
+     - redirect_url : str
+     
+     Additional params:
+     - size: enum [Size.LARGE | Size.MEDIUM | Size.SMALL]
+     - user_photo: bool
+     - corner_radius: integer
+     - access_write: bool
+     
     """
 
     def __init__(self, telegram_login: str,
-                 size: Size = Size.SMALL,
+                 size: Size = Size.MEDIUM,
                  redirect_url: str | None = None,
                  user_photo: bool = False,
                  corner_radius: int | None = None,
@@ -97,6 +117,7 @@ class TelegramLoginWidget:
         data_radius = f'data-radius="{corner_radius}"' if isinstance(
             corner_radius, int) else ''
         data_request_access = f'data-request-access="{access_write}"'
+        
         return {
             'data_telegram_login': data_telegram_login,
             'data_size': data_size,

@@ -20,7 +20,6 @@ class BotConfig:
 @dataclass
 class AppConfig:
     bot: BotConfig
-    domain_name: str
 
 
 def load_config():
@@ -32,5 +31,4 @@ def load_config():
             telegram_token=os.getenv('TELEGRAM_TOKEN'),
             telegram_login=os.getenv('TELEGRAM_LOGIN'),
         ),
-        domain_name=os.getenv('DOMAIN_NAME'),
     )
