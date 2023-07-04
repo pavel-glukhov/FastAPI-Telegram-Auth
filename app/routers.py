@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, Request
+from fastapi import APIRouter, Depends, Request, status
 from starlette.responses import HTMLResponse, RedirectResponse
 
 from app.config import load_config, templates
@@ -56,9 +56,11 @@ async def login(request: Request,
         result = validate_telegram_data(telegram_token, params)
     
     except TelegramDataIsOutdated:
-        return HTMLResponse('The authentication data is expired.')
+        return HTMLResponse('The authentication data is expired.',
+                            status_code=status.HTTP_401_UNAUTHORIZED)
     except TelegramDataError:
-        return HTMLResponse('The request contains invalid data.')
+        return HTMLResponse('The request contains invalid data.',
+                            status_code=status.HTTP_400_BAD_REQUEST)
     
     if result:
         return templates.TemplateResponse('profile.html',
