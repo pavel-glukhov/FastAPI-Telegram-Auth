@@ -31,35 +31,35 @@ async def login(request: Request,
     a function is called to validate the received data and, if successful,
     renders a page with information about the authorized user.
     """
-
+    
     config = load_config()
     telegram_token = config.bot.telegram_token
     telegram_login = config.bot.telegram_login
     redirect_url = str(request.url_for('login'))
-
+    
     widget = TelegramLoginWidget(telegram_login=telegram_login,
                                  size=Size.LARGE,
-                                 redirect_url=redirect_url,
                                  user_photo=False,
                                  corner_radius=0)
-    telegram_login_widget = widget.redirect_telegram_login_widget()
-
+    redirect_widget = widget.redirect_telegram_login_widget(
+        redirect_url=redirect_url)
+    
     context = {
         'request': request,
-        'telegram_login_widget': telegram_login_widget
+        'telegram_login_widget': redirect_widget
     }
-
+    
     if not params.dict().get('hash'):
         return templates.TemplateResponse('login.html', context=context)
-
+    
     try:
         result = verify_telegram_authentication(telegram_token, params.dict())
-
+    
     except TelegramDataIsOutdated:
         return HTMLResponse('The authentication data is expired.')
     except TelegramDataError:
         return HTMLResponse('The request contains invalid data.')
-
+    
     if result:
         return templates.TemplateResponse('profile.html',
                                           context={'request': request,
