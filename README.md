@@ -19,12 +19,21 @@ The project implements the Telegram Login Widget generation provided by the Tele
 
  
  - **callback_telegram_login_widget()**  
-        Return JavaScript code with the callback Telegram Login Widget.
-        The widget require to call JavaScript **onTelegramAuth(user)** function in your HTML Code. See the example below.  
-       `<script type="text/javascript">
-        function onTelegramAuth(user) {
-        alert('Logged in as ' + user.first_name + ' ' + user.last_name + ' (' + user.id + (user.username ? ', @' + user.username : '') + ')');
-         }
+        Return JavaScript code with the callback Telegram Login Widget.  
+\
+        If authorization was successful, the method waits for the Javascript
+        function to be called.
+
+    Example:
+
+    `callback_widget = callback_telegram_login_widget(func='onTelegramAuth', arg='user')`
+
+    Put this code in your HTML template:  
+        `<script type="text/javascript">
+            function onTelegramAuth(user) {
+            alert(
+            'Logged in as ' + user.first_name + ' ' + user.last_name + '!');
+            }
         </script>`
 
 
