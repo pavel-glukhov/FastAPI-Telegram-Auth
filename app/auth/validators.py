@@ -3,34 +3,46 @@ import hmac
 import time
 
 from app.auth.exceptions import TelegramDataError, TelegramDataIsOutdated
+from app.auth.schemes import TelegramAuth
 
 
-def verify_telegram_authentication(telegram_bot_token: str,
-                                   request_data: dict) -> dict:
-    request_data = request_data.copy()
+def validate_telegram_data(telegram_bot_token: str,
+                           data: TelegramAuth) -> dict:
     """
-    Checking authorization telegram data according to the information
-    in telegram doc: https://core.telegram.org/widgets/login
+    Checking authorization telegram data according to the information.
+    Official telegram doc: https://core.telegram.org/widgets/login
+    
+    Example of incoming data for validation:
+        https://localhost/login?
+        id=245942576&
+        first_name=Pavel&
+        last_name=Glukhov&
+        username=Gluuk&
+        photo_url=https%3A%2F%2Ft.me%2Fi%2Fuserpic%2F320%2F0hxupwk8k7ZrvTyRMSEk83gQax0UFTGkhZzN-NPKIAk.jpg&
+        auth_date=1688449915&hash=9f1a28d6e929af7e314b634df2a8dbb78460ef409368ac58c809c48dd9a4d367&
+        hash=9f1a28d6e929af7e314b634df2a8dbb78460ef409368ac58c809c48dd9a4d367
+    
     :param telegram_bot_token:
-    :param request_data:
+    :param data:
     :return:
     """
-    received_hash = request_data.pop('hash', None)
-    auth_date = request_data.get('auth_date')
+    data = data.dict()
+    received_hash = data.pop('hash', None)
+    auth_date = data.get('auth_date')
 
     if _verify_telegram_session_outdate(auth_date):
         raise TelegramDataIsOutdated(
             'Telegram authentication session is expired.'
         )
 
-    generated_hash = _generate_hash(request_data, telegram_bot_token)
+    generated_hash = _generate_hash(data, telegram_bot_token)
 
     if generated_hash != received_hash:
         raise TelegramDataError(
             'Request data is incorrect'
         )
 
-    return request_data
+    return data
 
 
 def _verify_telegram_session_outdate(auth_date: str) -> bool:

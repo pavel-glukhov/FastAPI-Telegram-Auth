@@ -4,7 +4,7 @@ from starlette.responses import HTMLResponse, RedirectResponse
 from app.config import load_config, templates
 from app.auth.exceptions import TelegramDataError, TelegramDataIsOutdated
 from app.auth.schemes import TelegramAuth
-from app.auth.validators import verify_telegram_authentication
+from app.auth.validators import validate_telegram_data
 from app.auth.widget import Size, TelegramLoginWidget
 
 router = APIRouter()
@@ -53,7 +53,7 @@ async def login(request: Request,
         return templates.TemplateResponse('login.html', context=context)
     
     try:
-        result = verify_telegram_authentication(telegram_token, params.dict())
+        result = validate_telegram_data(telegram_token, params)
     
     except TelegramDataIsOutdated:
         return HTMLResponse('The authentication data is expired.')
