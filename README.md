@@ -1,7 +1,8 @@
 # FastAPI-Telegram-Auth
-Simple example of authorization on website using the Telegram Login Widget
+Simple example of implementing authorization on a website using the Telegram login widget.
 
 Telegram Official Documentation: https://core.telegram.org/widgets/login
+
 
 ### Instructions for launching the project:
  - First need to create **.env** file and fill in  one according to the **.env.example**.
