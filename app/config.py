@@ -4,11 +4,11 @@ from dataclasses import dataclass
 from dotenv import load_dotenv
 from starlette.templating import Jinja2Templates
 
-root_path = os.path.dirname(os.path.dirname(__file__))
-dotenv_path = os.path.join(root_path, '.env')
-load_dotenv(dotenv_path)
+ROOT_PATH = os.path.dirname(os.path.dirname(__file__))
+DOTENV_PATH = os.path.join(ROOT_PATH, '.env')
+load_dotenv(DOTENV_PATH)
 
-templates = Jinja2Templates(directory=os.path.join(root_path, "templates"))
+templates = Jinja2Templates(directory=os.path.join(ROOT_PATH, "templates"))
 
 
 @dataclass
