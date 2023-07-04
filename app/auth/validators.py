@@ -2,7 +2,7 @@ import hashlib
 import hmac
 import time
 
-from app.exceptions import TelegramDataError, TelegramDataIsOutdated
+from app.auth.exceptions import TelegramDataError, TelegramDataIsOutdated
 
 
 def verify_telegram_authentication(telegram_bot_token: str,
