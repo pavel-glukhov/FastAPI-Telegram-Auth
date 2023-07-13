@@ -15,7 +15,7 @@ class AppConfig:
 
 def load_config():
     """
-    Main configuration of application.
+    Main application configuration.
     """
     return AppConfig(
         bot=BotConfig(

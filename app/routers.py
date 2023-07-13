@@ -3,7 +3,7 @@ import os
 from fastapi import APIRouter, Depends, Request, status
 from starlette.responses import HTMLResponse, RedirectResponse
 
-from app.config import load_config
+from app.config import load_config, AppConfig
 from app.auth.exceptions import TelegramDataError, TelegramDataIsOutdated
 from app.auth.schemes import TelegramAuth
 from app.auth.validators import validate_telegram_data
@@ -16,6 +16,11 @@ templates = Jinja2Templates(directory=os.path.join(
     os.path.dirname(os.path.dirname(__file__)), "templates"))
 
 
+async def create_jwt_token():
+    # here your code
+    pass
+
+
 @router.get("/", name='index')
 async def index(request: Request):
     """
@@ -26,7 +31,8 @@ async def index(request: Request):
 
 @router.get("/login", name='login')
 async def login(request: Request,
-                params: TelegramAuth = Depends(TelegramAuth)):
+                params: TelegramAuth = Depends(TelegramAuth),
+                config: AppConfig = Depends(load_config)):
     """
     Endpoint for authorization through Telegram API.
 
@@ -38,25 +44,26 @@ async def login(request: Request,
     renders a page with information about the authorized user.
     """
     
-    config = load_config()
     telegram_token = config.bot.telegram_token
     telegram_login = config.bot.telegram_login
     redirect_url = str(request.url_for('login'))
     
-    widget = TelegramLoginWidget(telegram_login=telegram_login,
-                                 size=Size.LARGE,
-                                 user_photo=False,
-                                 corner_radius=0)
-    redirect_widget = widget.redirect_telegram_login_widget(
+    login_widget = TelegramLoginWidget(telegram_login=telegram_login,
+                                       size=Size.LARGE,
+                                       user_photo=False,
+                                       corner_radius=0)
+    
+    redirect_widget = login_widget.redirect_telegram_login_widget(
         redirect_url=redirect_url)
     
-    context = {
-        'request': request,
-        'telegram_login_widget': redirect_widget
-    }
-    
     if not params.dict().get('hash'):
-        return templates.TemplateResponse('login.html', context=context)
+        return templates.TemplateResponse(
+            'login.html',
+            context={
+                'request': request,
+                'telegram_login_widget': redirect_widget
+            }
+        )
     
     try:
         result = validate_telegram_data(telegram_token, params)
@@ -69,6 +76,7 @@ async def login(request: Request,
                             status_code=status.HTTP_400_BAD_REQUEST)
     
     if result:
+        await create_jwt_token()
         return templates.TemplateResponse('profile.html',
                                           context={'request': request,
                                                    **result})
