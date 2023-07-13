@@ -1,13 +1,19 @@
+import os
+
 from fastapi import APIRouter, Depends, Request, status
 from starlette.responses import HTMLResponse, RedirectResponse
 
-from app.config import load_config, templates
+from app.config import load_config
 from app.auth.exceptions import TelegramDataError, TelegramDataIsOutdated
 from app.auth.schemes import TelegramAuth
 from app.auth.validators import validate_telegram_data
 from app.auth.widget import Size, TelegramLoginWidget
+from starlette.templating import Jinja2Templates
 
 router = APIRouter()
+
+templates = Jinja2Templates(directory=os.path.join(
+    os.path.dirname(os.path.dirname(__file__)), "templates"))
 
 
 @router.get("/", name='index')

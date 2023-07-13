@@ -5,7 +5,10 @@ Telegram Official Documentation: https://core.telegram.org/widgets/login
 
 
 ### Instructions for launching the project:
- - First need to create **.env** file and fill in  one according to the **.env.example**.
+ - First need to set **TELEGRAM_TOKEN** and **TELEGRAM_LOGIN** environment variables.  
+    Example:  
+      - export TELEGRAM_TOKEN=12345678:dsssfssdfdgdfsdfsdfsdfsdfsdfdsfsdf
+      - export TELEGRAM_LOGIN=MY_TEST_BOT  
  - Register your domain name using the command **/setdomain** in the @BotFather telegram bot.
  - Create Virtual Environment and activate one.
  - Install python libs using the command **pip install -r .\requirements.txt**

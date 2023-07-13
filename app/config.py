@@ -1,15 +1,6 @@
 import os
 from dataclasses import dataclass
 
-from dotenv import load_dotenv
-from starlette.templating import Jinja2Templates
-
-ROOT_PATH = os.path.dirname(os.path.dirname(__file__))
-DOTENV_PATH = os.path.join(ROOT_PATH, '.env')
-load_dotenv(DOTENV_PATH)
-
-templates = Jinja2Templates(directory=os.path.join(ROOT_PATH, "templates"))
-
 
 @dataclass
 class BotConfig:
@@ -28,7 +19,7 @@ def load_config():
     """
     return AppConfig(
         bot=BotConfig(
-            telegram_token=os.getenv('TELEGRAM_TOKEN'),
-            telegram_login=os.getenv('TELEGRAM_LOGIN'),
+            telegram_token=os.environ.get('TELEGRAM_TOKEN'),
+            telegram_login=os.environ.get('TELEGRAM_LOGIN'),
         ),
     )
