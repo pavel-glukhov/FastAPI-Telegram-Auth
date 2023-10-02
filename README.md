@@ -4,11 +4,11 @@ Simple example of implementing authorization on a website using the Telegram log
 Telegram Official Documentation: https://core.telegram.org/widgets/login
 
 
-### Instructions for launching the project:
- - First need to set **TELEGRAM_TOKEN** and **TELEGRAM_LOGIN** environment variables.  
+### Instruction:
+ - Set **TELEGRAM_TOKEN** and **TELEGRAM_LOGIN** environment variables.  
     Example:  
-      - export TELEGRAM_TOKEN=12345678:dsssfssdfdgdfsdfsdfsdfsdfsdfdsfsdf
-      - export TELEGRAM_LOGIN=MY_TEST_BOT  
+      - export TELEGRAM_TOKEN=**12345678:aaaaabbbbbcccccdddddeeeeeffffff**
+      - export TELEGRAM_LOGIN=**MY_TEST_BOT**
  - Register your domain name using the command **/setdomain** in the @BotFather telegram bot.
  - Create Virtual Environment and activate one.
  - Install python libs using the command **pip install -r .\requirements.txt**
@@ -17,7 +17,7 @@ Telegram Official Documentation: https://core.telegram.org/widgets/login
 ### Additional Information:
 The project implements the Telegram Login Widget generation provided by the TelegramLoginWidget class from app.widget.  
 
-#### The class **TelegramLoginWidget()** has to methods:
+#### The class **TelegramLoginWidget()** has two methods:
    - **redirect_telegram_login_widget()**  
         Return JavaScript code with redirect Telegram Login Widget  
 
@@ -42,6 +42,5 @@ The project implements the Telegram Login Widget generation provided by the Tele
 
 
 
-**This code is created only as example of the implementation of authorization via Telegram on the website.
-For use this code, additional mechanisms for issuing tokens and controlling for authorized users are required. 
+**This code is created only as example. For use this code, additional mechanisms for issuing tokens and controlling for authorized users are required. 
 Also, the structure of the code is not a reference and requires adjustments.** 
