@@ -5,7 +5,7 @@ from app import routers
 
 
 def init_app() -> FastAPI:
-    app = FastAPI(debug=True, )
+    app = FastAPI(debug=True)
     app.include_router(routers.router)
     return app
 

@@ -13,9 +13,9 @@ class AppConfig:
     bot: BotConfig
 
 
-def load_config():
+def load_config() -> AppConfig:
     """
-    Main application configuration.
+    Main configuration.
     """
     return AppConfig(
         bot=BotConfig(

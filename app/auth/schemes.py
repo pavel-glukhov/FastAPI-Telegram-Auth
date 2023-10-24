@@ -4,10 +4,10 @@ from pydantic import BaseModel
 
 
 class TelegramAuth(BaseModel):
-    id: Optional[int]
-    first_name: Optional[str]
-    last_name: Optional[str]
-    username: Optional[str]
-    photo_url: Optional[str]
-    auth_date: Optional[str]
-    hash: Optional[str]
+    id: Optional[int] = None
+    first_name: Optional[str] = None
+    last_name: Optional[str] = None
+    username: Optional[str] = None
+    photo_url: Optional[str] = None
+    auth_date: Optional[str] = None
+    hash: Optional[str] = None
