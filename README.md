@@ -5,8 +5,9 @@ Telegram Official Documentation: https://core.telegram.org/widgets/login
 
 ### Instructions:
  - Set the **TELEGRAM_TOKEN** and **TELEGRAM_LOGIN** environment variables.  
-    Examples:
-   
+
+#### Examples:
+
  **Linux**
   ```console
       export TELEGRAM_TOKEN=**12345678:aaaaabbbbbcccccdddddeeeeeffffff**
