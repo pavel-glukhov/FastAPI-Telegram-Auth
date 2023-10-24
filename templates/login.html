@@ -2,15 +2,35 @@
 <html>
 <head>
     <title>Authorization Page</title>
+     <style>
+        .centered-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+        }
+        .content-below {
+        margin-top: 20px;
+}
+    </style>
 </head>
 <body>
-<form>
-    <div>
-        <!-- {{ telegram_login_widget|safe }} -->
-        {% autoescape off %}
-        {{ telegram_login_widget }}
-        {% endautoescape %}
-    </div>
-</form>
+        <div class="centered-content">
+            <h2>Redirect login Widget</h2>
+        <form>
+            <div class="content-below">
+                {#This code displays a redirect widget on the login page.#}
+                {#<<--------------------------------------------------->>#}
+                <!-- {{ redirect_telegram_login_widget|safe }} -->
+                {% autoescape off %}
+                {{ redirect_telegram_login_widget }}
+                {% endautoescape %}
+                {#<<--------------------------------------------------->>#}
+            </div>
+        </form>
+        </div>
+
 </body>
 </html>
