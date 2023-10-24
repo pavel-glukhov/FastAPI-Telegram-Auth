@@ -9,7 +9,7 @@ from app.auth.schemes import TelegramAuth
 def validate_telegram_data(telegram_bot_token: str,
                            data: TelegramAuth) -> dict:
     """
-    Checking authorization telegram data according to the information.
+    Checking the authorization telegram data according to the information.
     Official telegram doc: https://core.telegram.org/widgets/login
     
     Example of incoming data for validation:
@@ -26,7 +26,7 @@ def validate_telegram_data(telegram_bot_token: str,
     :param data:
     :return:
     """
-    data = data.dict()
+    data = data.model_dump()
     received_hash = data.pop('hash', None)
     auth_date = data.get('auth_date')
 
