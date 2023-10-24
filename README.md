@@ -42,17 +42,36 @@ If authorization was successful, the method waits for the Javascript function to
 
 ### Example:
  ```python
+ ... 
  callback_widget = callback_telegram_login_widget(func='onTelegramAuth', arg='user')
+ # Where onTelegramAuth is name of JS function that should be run after successful authorization.
+ return templates.TemplateResponse(
+                'login.html',
+                context={
+                    'request': request,                    
+                    'callback_telegram_login_widget': callback_widget
+                }
+            )
+...
  ```
 
 Put this code in your HTML template:
- ```js
+ ```html
  <script type="text/javascript">
      function onTelegramAuth(user) {
      alert(
      'Logged in as ' + user.first_name + ' ' + user.last_name + '!');
      }
  </script>
+
+ <form>
+     <div>
+         <!-- {{ callback_telegram_login_widget|safe }} -->
+         {% autoescape off %}
+         {{ callback_telegram_login_widget }}
+         {% endautoescape %}
+     </div>
+ </form>
  ```
 
 **This code is created only as an example. To use this code, additional mechanisms for issuing tokens and controlling authorized users are required. 
